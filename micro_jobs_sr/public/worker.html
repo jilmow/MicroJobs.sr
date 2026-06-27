@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MicroJobs SR – Voor jongeren</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body class="role-body worker-page">
+  <header class="role-header">
+  <div class="role-header-inner header-centered">
+  <a href="index.html" class="back-link header-left">
+    ← Terug
+  </a>
+
+  <div class="header-center">
+    <a href="index.html" class="header-logo-link" aria-label="Terug naar rolkeuze">
+      <img
+        src="img/microjobs-logo.png"
+        alt="MicroJobs SR Logo"
+        class="header-logo"
+      />
+    </a>
+  </div>
+
+  <div class="header-right">
+    <button class="header-auth-btn">
+      Inloggen / Registreren
+    </button>
+  </div>
+</div>
+
+  </header>
+
+  <main class="role-main">
+    <div class="role-main-header">
+      <h1>Zoek microjobs in jouw buurt</h1>
+      <p>
+        Scroll door opdrachten, filter op skills en locatie en reageer op jobs
+        die bij jou passen.
+      </p>
+    </div>
+
+    <!-- FILTER BAR -->
+    <section class="filters-bar">
+      <div class="filters-row">
+        <div>
+          <div class="filter-label">Zoek</div>
+          <input
+            type="text"
+            class="filter-input"
+            id="job-search"
+            placeholder="Zoek op job, bv. gras maaien"
+          />
+        </div>
+
+        <div>
+          <div class="filter-label">Buurt</div>
+          <select class="filter-select" id="job-location">
+            <option>Alle buurten</option>
+            <option>Latour</option>
+            <option>Kwatta</option>
+            <option>Lelydorp</option>
+            <option>Meerzorg</option>
+          </select>
+        </div>
+
+        <div>
+          <div class="filter-label">Skills</div>
+          <select class="filter-select" id="job-skill">
+            <option>Alles</option>
+            <option>Gras maaien</option>
+            <option>Erf schoonmaken</option>
+            <option>Auto wassen</option>
+            <option>Folders uitdelen</option>
+            <option>Sjouw werk</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filters-row" style="flex: 0 0 auto;">
+        <div class="filter-label">Snelle filters</div>
+        <div class="filter-chip-group">
+          <button class="filter-chip" data-chip data-quick="today">
+            Vandaag / morgen
+          </button>
+          <button class="filter-chip" data-chip data-quick="after-school">
+            Na schooltijd
+          </button>
+          <button class="filter-chip" data-chip data-quick="pay-50">
+            SRD 50+
+          </button>
+        </div>
+      </div>
+
+      <button class="btn-clear" type="button" id="clear-filters">
+        Reset filters
+      </button>
+    </section>
+
+    <!-- FEED -->
+    <section class="feed-grid">
+      <!-- Left: job feed -->
+      <div class="feed-list">
+        <!-- Dynamische jobs (van werkgevers) -->
+        <div id="dynamic-jobs"></div>
+
+        <article class="feed-empty-card" id="worker-empty-state">
+          <div class="feed-image"></div>
+          <div class="feed-content">
+            <div class="feed-title">Nog geen microjobs geplaatst</div>
+            <div class="feed-meta">Nieuwe opdrachten verschijnen hier zodra ze geplaatst zijn.</div>
+            <p class="job-desc">
+              Gebruik de filters hierboven zodra er jobs beschikbaar zijn.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Right: sidebar -->
+      <aside class="feed-sidebar">
+        <div class="sidebar-card">
+          <h3>Jouw skills</h3>
+          <p class="job-desc">
+            Zodra je profielgegevens zijn ingevuld, verschijnen jouw skills hier.
+          </p>
+          <div class="sidebar-skills"></div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Locatie</h3>
+          <p class="job-desc">
+            Zodra je locatie is ingesteld, gebruiken we die om passende jobs te tonen.
+          </p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- AUTH MODAL (gedeeld) -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal">
+      <button class="modal-close" data-close-modal>&times;</button>
+
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-auth-tab="login">Login</button>
+        <button class="modal-tab" data-auth-tab="register">Registreren</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Login -->
+        <form class="auth-form" data-auth-panel="login">
+          <h2>Inloggen</h2>
+          <p class="auth-note">Log in met je geregistreerde e-mail en wachtwoord.</p>
+          <label>
+            E-mail
+            <input type="email" id="login-email" placeholder="jij@example.com" required />
+          </label>
+          <label>
+            Wachtwoord
+            <input type="password" id="login-password" placeholder="••••••••" required />
+          </label>
+          <button type="submit" class="btn-primary full-width">Inloggen</button>
+        </form>
+
+        <!-- Register -->
+        <form class="auth-form hidden" data-auth-panel="register">
+          <h2>Account aanmaken</h2>
+          <p class="auth-note">Vul je gegevens in om te registreren.</p>
+          <label>
+            Naam
+            <input type="text" id="register-name" placeholder="Je volledige naam" required />
+          </label>
+          <label>
+            Buurt
+            <input type="text" id="register-location" placeholder="Bijv. Latour, Kwatta, Lelydorp" required />
+          </label>
+          <label>
+            E-mail
+            <input type="email" id="register-email" placeholder="jij@example.com" required />
+          </label>
+          <label>
+            Wachtwoord
+            <input type="password" id="register-password" placeholder="Kies een wachtwoord" required />
+          </label>
+          <button type="submit" class="btn-primary full-width">Account aanmaken</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
